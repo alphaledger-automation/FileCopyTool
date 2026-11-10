@@ -1,0 +1,7 @@
+# Runtime packages. bootstrap.py installs these on the first run.
+#
+# The GUI is customtkinter. pillow is what customtkinter uses for images.
+# Everything else the tool needs (os, shutil, tkinter) ships with Python.
+
+customtkinter>=5.2.0
+pillow>=10.0.0

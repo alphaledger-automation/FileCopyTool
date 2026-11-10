@@ -1,0 +1,175 @@
+=============================================================
+  FILE COPY TOOL  v2.0  —  copy a named list of files
+  (charcoal & red, with Light and Dark mode)
+=============================================================
+
+WHAT IT DOES
+------------
+  You give it three things:
+
+    1. a SOURCE folder          where the files are now
+    2. a DESTINATION folder     where you want them
+    3. a LIST of file names     a .txt file, or typed straight in
+
+  It copies every file on the list from the source to the
+  destination, one by one, and shows you exactly what happened to
+  each one: copied, already there, not found, or failed.
+
+  Nothing is sent anywhere. Nothing in the source folder is moved,
+  renamed or deleted — it is a copy, never a move.
+
+
+HOW TO RUN
+----------
+  Double-click   run.bat
+
+  First run only: the app checks what is missing and installs it by
+  itself (needs internet):
+    - Python packages (customtkinter, pillow)
+  If Python itself is missing, run.bat installs it too (winget).
+  After that the app opens straight away.
+
+  There is no .exe to build and nothing to install by hand.
+
+
+HOW TO USE
+----------
+  Dashboard page (left sidebar)
+
+    1. Source Folder        Browse ... to the folder holding the files.
+    2. Destination Folder   Browse ... to where the copies should go.
+                            It is created if it does not exist.
+    3. File Names           two ways to give the list:
+
+         From a .txt list   Browse ... to a text file with one file
+                            name per line. If a file called
+                            file_list.txt sits next to run.bat it is
+                            picked up automatically on start-up.
+
+         Type the names     paste or type the names straight into the
+                            box, one per line.
+
+       In both cases blank lines are ignored, lines starting with #
+       are treated as comments, and stray quotes or trailing commas
+       are stripped.
+
+    4. Options
+
+       If it already exists
+           Overwrite it            (default) replace the copy there
+           Skip it                 leave the existing file alone
+           Keep both (add a number) writes "name (2).pdf"
+
+       Name matching
+           Find by name (any extension / sub-folder)   (default)
+               The list can say "[File Name]" without the
+               .pdf, or name a file that sits in a sub-folder of the
+               source — the tool finds it.
+           Exact name only
+               The line must match the path under the source folder
+               exactly. Fastest, and the safest when two files share
+               a name.
+
+       Search the source's sub-folders
+           On by default. Turn it off to look only in the source
+           folder itself.
+
+       Copy everything flat into one folder
+           Ignore any sub-folder in the list lines and put every
+           copy directly in the destination.
+
+       Open the destination when finished
+           Opens the folder in Explorer at the end of the run.
+
+    5. Load List     reads the list and fills the File Queue table
+                     so you can check it before copying.
+       Start Copy    runs it. Pause / Resume and Cancel work during
+                     the run; Cancel stops after the current file.
+
+    6. Summary tiles
+           LISTED   names read from the list
+           COPIED   files written to the destination
+           SKIPPED  already in the destination (Skip it mode)
+           MISSING  not found anywhere in the source
+           FAILED   an error — the reason is in the Result column
+           PENDING  not reached yet
+           DATA     total bytes copied
+
+    7. Activity log  one timestamped line per file, colour-coded.
+                     "Clear" empties it.
+
+    8. Save Report ...  writes a CSV of the whole run: every name,
+                        what it matched, its size, its result and
+                        where it landed. Good for a file note.
+
+  File Queue page (left sidebar)
+       A live table: row number, the name as it appears in your
+       list, what it actually matched (when the two differ), the
+       size, the result and the full destination path. The row being
+       copied scrolls into view by itself.
+
+
+LIGHT AND DARK MODE
+-------------------
+  Bottom left of the sidebar: Light / Dark. The whole window
+  switches instantly — cards, table, log and all — and the choice is
+  remembered for next time, in:
+
+      %LOCALAPPDATA%\AlphaLedgerAutomation\filecopy_ui.json
+
+  Both schemes were built as a pair, not one tinted from the other:
+  in Light mode the red accent is a deep brick so it reads on pale
+  surfaces; in Dark mode it is a bright coral so it reads on
+  charcoal. Body text clears 4.5:1 contrast in both.
+
+
+WITHOUT THE WINDOW (command line)
+---------------------------------
+  python main.py --cli "C:\source" "D:\dest" "C:\list.txt"
+
+  Extra switches:
+      --skip-existing   leave files already in the destination alone
+      --keep-both       add " (2)" instead of overwriting
+      --exact           match the list lines exactly
+      --no-recursive    do not look in the source's sub-folders
+      --flatten         ignore sub-folders in the list, copy flat
+
+  python main.py --setup-only     install / verify the packages only
+
+
+FILES IN THIS FOLDER
+--------------------
+  run.bat           what you double-click
+  main.py           entry point (window, or --cli)
+  bootstrap.py      first-run self-setup (installs the packages)
+  constants.py      names, options and the colour palette
+  copy_engine.py    the copy itself — list parsing, matching, copying
+  gui.py            the window
+  requirements.txt  the two packages the app needs
+  Assets\           icon and logo
+  USER_GUIDE.txt    this file
+
+
+TROUBLESHOOTING
+---------------
+  Everything comes up MISSING
+      The names in your list do not match the files in the source.
+      Turn on "Find by name (any extension / sub-folder)", check the
+      source folder is the right one, and open the source folder
+      from the sidebar to compare.
+
+  "Source and destination are the same folder"
+      Pick a different destination — copying a folder onto itself
+      would do nothing useful.
+
+  The window does not open
+      Setup log:
+      %LOCALAPPDATA%\AlphaLedgerAutomation\filecopy_setup.log
+
+  Python installed but still asked for
+      Close the window and run run.bat again — Windows needs a new
+      window to see a freshly installed Python on PATH.
+
+-------------------------------------------------------------
+  Alpha Ledger Automation
+-------------------------------------------------------------

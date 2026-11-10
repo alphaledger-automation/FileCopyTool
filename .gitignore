@@ -1,0 +1,42 @@
+# --- Your file lists and run output (keep local) ---
+file_list.txt
+*_report.csv
+*.csv
+
+# --- Secrets / local config ---
+.env
+.env.*
+config.json
+filecopy_ui.json
+
+# --- Data files (never commit) ---
+*.xlsx
+*.xls
+*.pdf
+*.docx
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- PyInstaller ---
+*.manifest
+*.spec
+
+# --- Logs ---
+*.log
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
